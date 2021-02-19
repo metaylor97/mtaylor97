@@ -1,0 +1,23 @@
+def FindMeanAndStd(df, measurement_name, exp_suffix = None, groupby_column):
+    
+    '''
+    Allows quick mean and stdev calculation based on a given measurement and grouping. 
+    
+    measurement_name = column within the dataframe containing a measurement. Must be int or float
+    exp_suffix = useful item to differentiate between different runs using the same measurement_name
+    groupby_column = dataframe column name, determines how things are grouped for the mean and stdev measurement. 
+    
+    Example.
+    
+    df = FindMeanAndStd(df, measurement_name = 'Luminescence', exp_suffix = '_by container', grouby_column = ['Sample Type','Container ID'])
+    df = FindMeanAndStd(df, measurement_name = 'Luminescence', exp_suffix = '_by batch', grouby_column = ['Sample Type','Batch ID'])
+    '''
+    
+        df['{} mean{}'.format(measurement_name, exp_suffix)] = e
+        df['{} std{}'.format(measurement_name, exp_suffix)] = e
+
+
+        df['{} mean{}'.format(measurement_name, exp_suffix)] = df.groupby( groupby_column )[ measurement_name ].transform('mean')
+        df['{} std{}'.format(measurement_name, exp_suffix)] = df.groupby( groupby_column )[ measurement_name ].transform('std')
+
+        return df
