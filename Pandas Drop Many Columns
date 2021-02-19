@@ -1,0 +1,25 @@
+def DropColumns(df,string_element,exception_cols=None):
+    '''
+    
+    Function drops any column that contains an element provided in "string_element". The function does NOT drop the column if the name of the column is in "exception_cols".
+    
+    string_element = list of strings. 
+    e.g. ['column 1','row']
+    
+    exeptions_cols = list of column names you wish to keep that otherwise would have been deleted under "string_element"
+    e.g. ['reaction column 1', 'assay container row']
+    '''
+
+    list_to_drop = []
+    col_name_list = df.columns
+    for name in col_name_list:
+        for element in string_element:
+            if (element in name) & (name not in exception_cols):
+                list_to_drop.append(name)
+
+    return list_to_drop
+    
+    
+    '''
+    df.drop(list_to_drop, inplace=True, axis=1)
+    '''
