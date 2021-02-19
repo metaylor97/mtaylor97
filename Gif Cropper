@@ -1,0 +1,49 @@
+import os.path
+from PIL import Image, ImageSequence
+import glob
+
+path = '/asdf/asdf/1-12-21 videos'
+# for filename in os.listdir(path):
+#     print(filename)
+
+os.chdir(path)
+    
+file_name = glob.glob('*.gif')
+print(len(file_name))
+
+for i in range(0,len(file_name)):
+    file_path = os.path.join(path, file_name[i])
+
+    progress = (i+1)/len(file_name)
+#   update_progress(progress, barLength = len(file_name))
+    
+    # the .gif image is opened
+    gif_file = Image.open(file_path)
+    
+    
+    
+    
+    # get the size of the original .gif file in pixels 
+    width, height = gif_file.size 
+    
+    
+    
+    
+    '''Setting the points for cropped image (2 points: (top, left) corner 
+    and (bottom, right) corner coordinates)   ''' 
+    left = 0  #leave both at 0 to get top-left corner
+    top = 0
+    right = width / 2 #choose how small to crop the new .gif file
+    bottom = height / 6 
+    
+    
+    
+    
+    #generates a list with all the cropped images
+    frames = []
+    for frame in ImageSequence.Iterator(gif_file):
+        imCrop = gif_file.crop((left, top, right, bottom))
+        frames.append(imCrop)
+    #save file from the frames list in the same folder as the original .gif file
+    first_frame = frames[0]
+    first_frame.save(('crop_'+ file_name[i]), save_all=True, append_images=frames)
